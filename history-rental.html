@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1 class="mobil">History Rental</h1>
+    <div id="history"></div>
+
+    <script>
+        const electron = require("electron");
+        const {
+            ipcRenderer
+        } = electron;
+        ipcRenderer.send("appointment:request:history");
+
+        ipcRenderer.on("appointment:response:history", (event, appointments) => {
+            const historyDiv = document.getElementById("history");
+            appointments.forEach(appointment => {
+                const appointmentDiv = document.createElement("div");
+
+                const nameParagraph = document.createElement("p");
+                nameParagraph.innerHTML = `Nama Peminjam: ${appointment.name}`;
+
+                const mobilParagraph = document.createElement("p");
+                mobilParagraph.innerHTML = `Pilihan Mobil: ${appointment.mobil}`;
+
+                const datepinjamParagraph = document.createElement("p");
+                datepinjamParagraph.innerHTML = `Tanggal Pinjam: ${appointment.datepinjam}`;
+
+                const timepinjamParagraph = document.createElement("p");
+                timepinjamParagraph.innerHTML = `Waktu Pinjam: ${appointment.timepinjam}`;
+
+                const biayawaktuParagraph = document.createElement("p");
+                biayawaktuParagraph.innerHTML = `Lama Pinjam & Harga: ${appointment.biayawaktu}`;
+
+                const doneParagraph = document.createElement("p");
+                doneParagraph.innerHTML = `Done: ${appointment.done ? "Yes" : "No"}`;
+
+                const hr = document.createElement("hr");
+
+                appointmentDiv.appendChild(nameParagraph);
+                appointmentDiv.appendChild(mobilParagraph);
+                appointmentDiv.appendChild(datepinjamParagraph);
+                appointmentDiv.appendChild(timepinjamParagraph);
+                appointmentDiv.appendChild(biayawaktuParagraph);
+                appointmentDiv.appendChild(doneParagraph);
+                appointmentDiv.appendChild(hr);
+
+                historyDiv.append(appointmentDiv);
+
+            });
+        });
+    </script>
+</body>
+
+</html>

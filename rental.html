@@ -1,0 +1,58 @@
+<html>
+
+<head>
+    <title></title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3 style="margin-left: 150px;">Rental Mobil</h3>
+        <form id="form">
+            <label for="name">Nama Peminjam: </label>
+            <input type="text" name='name' class="menu" required><br /><br />
+            <label for="mobil">Pilihan Mobil: </label>
+            <select name="mobil" id="pilihan-mobil" class="menu">
+                <option value="Toyota Avanza">Toyota Avanza</option>
+                <option value="Daihatsu">Daihatsu</option>
+                <option value="Izuzu MU-X">Izuzu MU-X</option>
+            </select>
+            <br><br>
+            <label for="datepinjam"> Tanggal Peminjaman: </label>
+            <input type="date" name="datepinjam" placeholder="YYYY-MM-DD" class="menu" required />
+            <br><br>
+            <label for="timepinjam">Waktu Pinjam: </label>
+            <input type="time" name="timepinjam" class="menu" class="menu" required />
+            <br><br>
+            <label for="biayawaktu">Lama Pinjam & Harga: </label>
+            <select name="biayawaktu" id="biayawaktu" class="menu">
+                <option value="Rp. 350000/5 jam">Rp. 350000/5 jam</option>
+                <option value="Rp. 500000/7 jam">Rp. 500000/7 jam</option>
+            </select>
+            <br><br>
+            <input type="submit" />
+        </form>
+    </div>
+
+    <script>
+        const electron = require("electron");
+        const {
+            ipcRenderer
+        } = electron;
+
+        const form = document.getElementById("form");
+        const elements = {};
+
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+
+            for (let i = 0; i < form.elements.length; i++) {
+                if (form.elements[i].type !== "submit")
+                    elements[form.elements[i].name] = form.elements[i].value;
+            }
+            ipcRenderer.send("appointment:rental", elements);
+        });
+    </script>
+</body>
+
+</html>

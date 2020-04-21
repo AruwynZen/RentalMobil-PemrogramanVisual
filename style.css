@@ -1,0 +1,14 @@
+.container{
+    margin-left: 150px;
+}
+
+.menu{
+    float: right;
+    width: 150px;
+    height: 30px;
+    margin-right: 150px;
+}
+
+.mobil{
+    text-align: center;
+}
