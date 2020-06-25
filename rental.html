@@ -14,7 +14,7 @@
         <form id="form" class="">
             <div class="form-group">
                 <label for="name">Nama Peminjam: </label>
-                <input type="text" name='name' class="form-control" required>
+                <input type="text" name='name' id='nama-peminjam' class="form-control" required>
             </div>
             <div class="form-group">
                 <label for="mobil">Pilihan Mobil: </label>
@@ -28,21 +28,25 @@
                 <div class="card-body mr-auto">
                     <div class="form-group">
                         <label for="datepinjam"> Tanggal Peminjaman: </label>
-                        <input type="date" name="datepinjam" placeholder="YYYY-MM-DD" class="form-control" required />
+                        <input type="date" name="datepinjam" id="datepinjam" placeholder="YYYY-MM-DD"
+                            class="form-control" required />
                     </div>
                     <div class="form-group">
                         <label for="timepinjam">Waktu Pinjam: </label>
-                        <input type="time" name="timepinjam" class="form-control" id="timepinjam" required />
+                        <input type="time" name="timepinjam" id="timepinjam" class="form-control" id="timepinjam"
+                            required />
                     </div>
                 </div>
                 <div class="card-body ml-auto">
                     <div class="form-group">
                         <label for="datepinjam"> Tanggal Pengembalian: </label>
-                        <input type="date" name="datekembali" placeholder="YYYY-MM-DD" class="form-control" required />
+                        <input type="date" name="datekembali" id="datekembali" placeholder="YYYY-MM-DD"
+                            class="form-control" required />
                     </div>
                     <div class="form-groupe">
                         <label for="timepinjam">Waktu Kembali: </label>
-                        <input type="time" name="timekembali" class="form-control" id="timekembali" required />
+                        <input type="time" name="timekembali" id="timekembali" class="form-control" id="timekembali"
+                            required />
                     </div>
                 </div>
             </div>
@@ -62,6 +66,13 @@
     </div>
 
     <script>
+        var nama = document.getElementById('nama-peminjam');
+        var mobil = document.getElementById('pilihan-mobil');
+        var datepinjam = document.getElementById('datepinjam');
+        var timepinjam = document.getElementById('timepinjam');
+        var datekembali = document.getElementById('datekembali');
+        var timekembali = document.getElementById('timekembali');
+        var biayawaktu = document.getElementById('biayawaktu');
         var mysql = require('mysql');
         var connection = mysql.createConnection({
             host: 'localhost',
@@ -84,7 +95,7 @@
                     elements[form.elements[i].name] = form.elements[i].value;
             }
             ipcRenderer.send("appointment:rental", elements);
-            $sql = "INSERT INTO tb_rental(id, name, mobil, datepinjam, timepinjam, datekembali, timekembali, biayawaktu) VALUES (NULL, '" + name + "', '" + mobil + "', '" + datepinjam + "', '" + timepinjam + "', '" + datekembali + "', '" + timekembali + "', '" + biayawaktu + "')";
+            $sql = "INSERT INTO tb_rental(id, name, mobil, datepinjam, timepinjam, datekembali, timekembali, biayawaktu) VALUES (NULL,'" + nama.value + "', '" + mobil.value + "', '" + datepinjam.value + "', '" + timepinjam.value + "', '" + datekembali.value + "', '" + timekembali.value + "', '" + biayawaktu.value + "')";
             console.log($sql);
             connection.query($sql);
         });
