@@ -8,6 +8,9 @@
     <h1 class="title">History Rental</h1>
     <div id="history"></div>
 
+    <tbody onload="history()">
+
+    </tbody>
     <script>
         const electron = require("electron");
         const {
@@ -32,6 +35,12 @@
                 const timepinjamParagraph = document.createElement("p");
                 timepinjamParagraph.innerHTML = `Waktu Pinjam: ${appointment.timepinjam}`;
 
+                const datekembaliParagraph = document.createElement("p");
+                datekembaliParagraph.innerHTML = `Tanggal Kembali: ${appointment.datekembali}`;
+
+                const timekembaliParagraph = document.createElement("p");
+                timekembaliParagraph.innerHTML = `Waktu Kembali: ${appointment.timekembali}`;
+
                 const biayawaktuParagraph = document.createElement("p");
                 biayawaktuParagraph.innerHTML = `Lama Pinjam & Harga: ${appointment.biayawaktu}`;
 
@@ -44,6 +53,8 @@
                 appointmentDiv.appendChild(mobilParagraph);
                 appointmentDiv.appendChild(datepinjamParagraph);
                 appointmentDiv.appendChild(timepinjamParagraph);
+                appointmentDiv.appendChild(datekembaliParagraph);
+                appointmentDiv.appendChild(timekembaliParagraph);
                 appointmentDiv.appendChild(biayawaktuParagraph);
                 appointmentDiv.appendChild(doneParagraph);
                 appointmentDiv.appendChild(hr);
@@ -52,6 +63,44 @@
 
             });
         });
+
+        var mysql = require('mysql');
+        var connection = mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '',
+            database: 'rental-mobil'
+        });
+        window.onload = function () { history() }
+
+        function history() {
+
+            $sql2 = "SELECT * FROM tb_rental";
+
+            connection.query($sql2, function (error, results, fields) {
+                if (error) throw error;
+                console.log();
+                let datahtml = '';
+                const tableBod = document.getElementById('tableBody');
+                for (let index = 0; index < results.length; index++) {
+                    if (results[index].name == 1) {
+                        datahtml += `<tr><td>${index + 1}</td>
+                                <td>${results[index].name}</td>
+                                <td>${results[index].mobil}</td>
+                                <td>${results[index].datepinjam}</td>
+                                <td>${results[index].timepinjam}</td></tr>
+                                <td>${results[index].datekembali}</td>
+                                <td>${results[index].timekembali}</td>
+                                <td>${results[index].biayawaktu}</td>`;
+                    }
+                    tableBod.innerHTML = datahtml;
+
+                }
+            });
+
+
+        }
+
     </script>
 </body>
 

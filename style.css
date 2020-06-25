@@ -9,6 +9,14 @@
     margin-right: 150px;
 }
 
-.title{
-    text-align: center;
+/* jumbotron */
+.jumbotron{
+  background-image: url(gambar/C_carfromjapancomjp\ 1548043608.jpg);
+  background-size: cover;
+  height: 440;
+  color: white;
+}
+
+.card-body{
+  display: inline-block;
 }
